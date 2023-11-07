@@ -6,51 +6,54 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "./Header";
 import Icon from "../assets/Home.svg";
-import axios from "axios"; // Import Axios
+// import axios from "axios"; // Import Axios
 
 const Homepage = () => {
-  const [speakers, setSpeakers] = useState([]);
-  const [newSpeaker, setNewSpeaker] = useState({ name: "", topic: "" });
-  const [conferenceData, setConferenceData] = useState(null);
+  // const [speakers, setSpeakers] = useState([]);
+  // const [newSpeaker, setNewSpeaker] = useState({ name: "", topic: "" });
+  // const [conferenceData, setConferenceData] = useState(null);
 
-  const addSpeaker = () => {
-    if (newSpeaker.name && newSpeaker.topic) {
-      const updatedSpeakers = [...speakers, newSpeaker];
-      setSpeakers(updatedSpeakers);
-      setNewSpeaker({ name: "", topic: "" });
-    }
-  };
+  // const addSpeaker = () => {
+  //   if (newSpeaker.name && newSpeaker.topic) {
+  //     const updatedSpeakers = [...speakers, newSpeaker];
+  //     setSpeakers(updatedSpeakers);
+  //     setNewSpeaker({ name: "", topic: "" });
+  //   }
+  // };
 
-  const deleteSpeaker = (index) => {
-    const updatedSpeakers = [...speakers];
-    updatedSpeakers.splice(index, 1);
-    setSpeakers(updatedSpeakers);
-  };
+  // const deleteSpeaker = (index) => {
+  //   const updatedSpeakers = [...speakers];
+  //   updatedSpeakers.splice(index, 1);
+  //   setSpeakers(updatedSpeakers);
+  // };
 
-  useEffect(() => {
-    // Use Axios for data fetching
-    axios.get("http://localhost:8080/conferences/$(id)")
-      .then((response) => {
-        setConferenceData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching conference data:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:8080/conferences/$(id)")
+  //     .then((response) => {
+  //       setConferenceData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching conference data:", error);
+  //     });
+  // }, []);
 
   return (
     <div>
       <Header />
-      <Link to="/conference">
-        <button className="bg-blue-500 hover-bg-blue-600 text-white py-2 px-4 rounded-lg my-4 mx-[100px]">
-          Go to Conference
-        </button>
-      </Link>
+
       <div className="mt-8">
         <img src={Icon} className="mx-auto" alt="Home Icon" />
       </div>
 
-      <h1 className="text-3xl ml-[20px] mt-8 font-semibold">SPEAKERS</h1>
+      <div>
+      <Link to="/conference">
+      <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg my-4 mx-auto block w-40">
+      Go to Conference
+      </button>
+      </Link>
+      </div>
+
+      {/* <h1 className="text-3xl ml-[20px] mt-8 font-semibold">SPEAKERS</h1>
       <div className="flex justify-center">
         <div className="flex flex-col space-y-4">
           <input
@@ -103,7 +106,7 @@ const Homepage = () => {
         </div>
       ) : (
         <p>Loading conference data...</p>
-      )}
+      )} */}
     </div>
   );
 };

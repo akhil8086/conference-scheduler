@@ -39,16 +39,6 @@ function LocationInfoPage() {
           ></iframe>
         )}
       </div>
-
-      <p className="text-lg">
-        Our conference will be held at the following address:
-      </p>
-
-      <address className="text-lg">
-        San Francisco Convention Center<br />
-        123 Conference Ave<br />
-        San Francisco, CA 12345
-      </address>
     </div>
   );
 }
