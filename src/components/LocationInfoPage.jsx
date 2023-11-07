@@ -6,7 +6,7 @@ import Header from './Header';
 
 function LocationInfoPage() {
   const [locationData, setLocationData] = useState({});
-  const API_KEY = 'b3fbd9f320e34e88b0ecf55baf826e5b'; 
+  const API_KEY = 'b3fbd9f320e34e88b0ecf55baf826e5b';
 
   useEffect(() => {
     const getLocationData = async () => {
@@ -25,22 +25,26 @@ function LocationInfoPage() {
   }, [API_KEY]);
 
   return (
-    <div>
+    <div className="text-center">
       <Header />
-      <h2>Location Information</h2>
-      <div id="map" style={{ height: '400px', width: '100%' }}>
+      <h2 className="text-3xl font-bold mt-4">Location Information</h2>
+
+      <div id="map" className="my-8" style={{ height: '400px', width: '100%' }}>
         {locationData.lat && locationData.lng && (
           <iframe
             width="100%"
             height="400"
-            // frameBorder="0"
             style={{ border: 0 }}
             src={`https://www.openstreetmap.org/export/embed.html?bbox=${locationData.lng - 0.01},${locationData.lat - 0.01},${locationData.lng + 0.01},${locationData.lat + 0.01}&layer=mapnik&marker=${locationData.lat},${locationData.lng}`}
           ></iframe>
         )}
       </div>
-      <p>Our conference will be held at the following address:</p>
-      <address className=''>
+
+      <p className="text-lg">
+        Our conference will be held at the following address:
+      </p>
+
+      <address className="text-lg">
         San Francisco Convention Center<br />
         123 Conference Ave<br />
         San Francisco, CA 12345
@@ -50,3 +54,4 @@ function LocationInfoPage() {
 }
 
 export default LocationInfoPage;
+
