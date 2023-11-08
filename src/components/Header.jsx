@@ -40,9 +40,6 @@ function Header() {
         <Link to="/location">
           <button className="pr-8">Location</button>
         </Link>
-        <Link to="/conduct">
-          <button className="pr-8">Code of Conduct</button>
-        </Link>
       </div>
     </div>
   );

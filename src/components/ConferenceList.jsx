@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 
 function ConferenceList({ conferenceData, deleteConference }) {
+  console.log(conferenceData)
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
@@ -14,9 +15,9 @@ function ConferenceList({ conferenceData, deleteConference }) {
             <p className="text-sm mb-2">Code of Conduct: {conference.codeOfConduct}</p>
 
             <div className="flex justify-center space-x-4 mt-4">
-              <Link to="/schedule">
+              <Link to={`/schedule/${conference.id}`}>
                 <button className="bg-green-500 text-white p-2 rounded hover:bg-green-600">
-                  Navigate
+                  Schedule
                 </button>
               </Link>
               <button
