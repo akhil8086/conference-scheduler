@@ -104,9 +104,12 @@ function Speakers() {
   
 
       <Link to={`/details/${id}`}>
-          <button>
-            Conference Details
-          </button>
+      <button
+  className="text-blue-500 hover:underline hover:text-blue-700 focus:outline-none"
+      >
+     Conference Details
+   </button>
+
         </Link>
       </div>
     </div>

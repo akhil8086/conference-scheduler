@@ -26,8 +26,9 @@ function ConferenceDetails() {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div>
       <Header />
+      <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mt-8 text-center">Conference Details</h2>
       <button onClick={fetchConferenceData} className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mx-2">
         Deatils
@@ -41,6 +42,7 @@ function ConferenceDetails() {
           <p>Code of Conduct: {conferenceData.codeOfConduct}</p>
         </div>
       )}
+    </div>
     </div>
   );
 }
