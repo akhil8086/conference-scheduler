@@ -1,8 +1,7 @@
 
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import ConferenceList from './ConferenceList';
 import Header from './Header';
 
@@ -80,7 +79,7 @@ function Conference() {
     <div className="container mx-auto p-4n">
       <Header />
       <div className="bg-blue-200 border border-gray-300 shadow-md rounded p-4 mx-auto max-w-md mt-8">
-        <h2 className="text-2xl font-bold mt-8 text-center">Post New Conference Data</h2>
+        <h2 className="text-2xl font-bold mt-8 text-center">New Conference</h2>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-4 bg-blue-100 p-4 rounded">
   <div className="mb-4">
     <label className="block text-gray-700 font-semibold mb-2">Name:</label>
@@ -137,7 +136,7 @@ function Conference() {
   </div>
   <div className="flex justify-center">
     <button type="submit" onClick={handleSubmit} className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mx-2">
-      Post Conference Data
+      New Conference 
     </button>
     <button onClick={fetchConferenceData} className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mx-2">
       View Data

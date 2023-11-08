@@ -2,7 +2,6 @@
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LocationInfoPage from "./components/LocationInfoPage";
-
 import Schedule from "./components/Schedule";
 import Homepage from "./components/HomePage";
 import Conference from "./components/Conferecnce";

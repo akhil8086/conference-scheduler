@@ -1,6 +1,6 @@
 
 
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Header from './Header';
@@ -30,7 +30,7 @@ function Speakers() {
     }));
   };
 
-  const { id, ID } = useParams(); // Ensure you have the correct route parameters
+  const { id, ID } = useParams(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,16 +60,6 @@ function Speakers() {
 
     fetchSpeakerDetails();
   }, [id, ID]);
-
-  // const handleDelete = async () => {
-  //   try {
-  //     const response = await axios.delete(`http://localhost:8080/conferences/speaker/${id}/${ID}`);
-  //     console.log(response.data);
-  //     setSpeaker(null);
-  //   } catch (error) {
-  //     console.error('Error deleting speaker:', error);
-  //   }
-  // };
 
   return (
     <div>
@@ -111,13 +101,7 @@ function Speakers() {
           </button>
         </form>
         {speaker && <SpeakerCard speaker={speaker} />}
-        {/* <button
-          type="button"
-          onClick={handleDelete}
-          className="mt-4 w-full bg-red-500 text-white p-2 rounded hover-bg-red-600 focus:outline-none focus-bg-red-600"
-        >
-          Delete Speaker
-        </button> */}
+  
 
       <Link to={`/details/${id}`}>
           <button>
