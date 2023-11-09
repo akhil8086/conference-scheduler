@@ -64,6 +64,10 @@ function Speakers() {
   return (
     <div>
       <Header />
+      <div>
+      <h1 className='text-2xl font-bold mb-2 text-center'>Add a Speaker</h1>
+      </div>
+      
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-lg w-full max-w-lg">
         <form onSubmit={handleSubmit}>
@@ -102,15 +106,24 @@ function Speakers() {
         </form>
         {speaker && <SpeakerCard speaker={speaker} />}
   
+      <div className="flex flex-row justify-around">   
+      <Link to={`/schedule/${id}`}>
+      <button
+      className="text-blue-500 hover:underline hover:text-blue-700 focus:outline-none"
+      >
+     back
+     </button>
+        </Link>
 
+         
       <Link to={`/details/${id}`}>
       <button
-  className="text-blue-500 hover:underline hover:text-blue-700 focus:outline-none"
+      className="text-blue-500 hover:underline hover:text-blue-700 focus:outline-none"
       >
      Conference Details
-   </button>
-
+     </button>
         </Link>
+    </div>
       </div>
     </div>
     </div>

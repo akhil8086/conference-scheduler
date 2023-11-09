@@ -1,5 +1,4 @@
 
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./Header";
@@ -11,6 +10,7 @@ function ConferenceSchedule() {
   const [formData, setFormData] = useState({ talk: "", time: "" });
   const params = useParams();
   const scheduleId = params.id;
+ 
   const [editingIndex, setEditingIndex] = useState(-1);
   const [isFormEnabled, setFormEnabled] = useState(true);
 
@@ -72,7 +72,7 @@ function ConferenceSchedule() {
     <Header />
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">Conference Schedule</h1>
-
+       <h1 className="text-2l font-bold text-center mb-3"> Add Talk and Timings </h1>
       <form onSubmit={handleSubmit} className="mb-4 flex flex-col items-center">
   <div className="flex flex-col mb-4 w-64">
     <input
@@ -128,6 +128,7 @@ function ConferenceSchedule() {
               </div>
             )}
           </div>
+          
         ))}
       </div>
     </div>

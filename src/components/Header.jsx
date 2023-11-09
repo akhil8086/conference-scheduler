@@ -1,6 +1,7 @@
 
 import { Link } from "react-router-dom";
 
+
 function Header() {
   return (
     <div className="w-full h-20 bg-[lightcoral] flex items-center">
@@ -12,6 +13,7 @@ function Header() {
         <Link to="/location">
           <button className="pr-8">Location</button>
         </Link>
+        
       </div>
     </div>
   );

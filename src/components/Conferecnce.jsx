@@ -53,7 +53,6 @@ function Conference() {
 
   const fetchConferenceData = () => {
     axios
-      // .get('http://localhost:8080/conferences/list-all')
       .get(`http://localhost:8080/conferences/${id}`)
       .then((response) => {
         setConferenceData(response.data);
