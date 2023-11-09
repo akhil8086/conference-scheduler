@@ -11,16 +11,16 @@ import ConferenceDetails from "./components/ConferenceDetails";
 function App() {
   return (
     <Router>
-      <Routes>
-      <Route path="/conference" element={<Conference />} />
-        <Route path="/" element={<Homepage />} />
-        <Route path="/location" element={<LocationInfoPage />} />
-        <Route path="/speakers/:id/:ID" element={<Speakers/>}/>
-        <Route path="/schedule/:id" element={<Schedule />} />
-        <Route path="/details/:id" element={<ConferenceDetails />} />
-       
-      </Routes>
-    </Router>
+    <Routes>
+    <Route path="/conference" element={<Conference />} />
+      <Route path="/" element={<Homepage />} />
+      <Route path="/location" element={<LocationInfoPage />} />
+      <Route path="/speakers/:id/:ID" element={<Speakers/>}/>
+      <Route path="/schedule/:id" element={<Schedule />} />
+      <Route path="/details/:id" element={<ConferenceDetails />} />
+     
+    </Routes>
+  </Router>
   );
 }
 

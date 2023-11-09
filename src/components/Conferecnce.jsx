@@ -17,6 +17,7 @@ function Conference() {
     hotelOptions: [],
     codeOfConduct: '',
   });
+  const [id,setId] = useState(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +31,7 @@ function Conference() {
       .post('http://localhost:8080/conferences', formData)
       .then((response) => {
         console.log(response);
-        console.log(response.data.id);
+        setId(response.data.id);
 
         setFormData({
           name: '',
@@ -52,10 +53,12 @@ function Conference() {
 
   const fetchConferenceData = () => {
     axios
-      .get('http://localhost:8080/conferences/list-all')
+      // .get('http://localhost:8080/conferences/list-all')
+      .get(`http://localhost:8080/conferences/${id}`)
       .then((response) => {
         setConferenceData(response.data);
         setShowData(true);
+        console.log(response.data)
       })
       .catch((error) => {
         console.error('Error fetching conference data:', error);
