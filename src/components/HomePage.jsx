@@ -13,7 +13,6 @@ const Homepage = () => {
   return (
     <div>
       <Header />
-
       <div className="mt-8">
         <img src={Icon} className="mx-auto" alt="Home Icon" />
       </div>

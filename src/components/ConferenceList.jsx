@@ -5,7 +5,7 @@ function ConferenceList({ conferenceData, deleteConference }) {
   console.log(conferenceData)
   const conference = conferenceData
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 ml-[500px] mr-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
           <div key={conference.id} className="bg-white rounded-lg shadow-md p-4 text-center">
             <h2 className="text-lg font-bold mb-2">{conference.name}</h2>

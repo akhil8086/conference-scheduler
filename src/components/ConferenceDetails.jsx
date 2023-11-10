@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./Header";
-import { Link } from "react-router-dom";
+
 
 function ConferenceDetails() {
   const [conferences, setConferences] = useState([]);
