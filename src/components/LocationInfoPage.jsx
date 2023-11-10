@@ -1,7 +1,4 @@
-
-
-
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 
 function LocationInfoPage() {
@@ -11,7 +8,7 @@ function LocationInfoPage() {
   useEffect(() => {
     const getLocationData = async () => {
       try {
-        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=San+Francisco&key=${API_KEY}`);
+        const response = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=Kerala&key=${API_KEY}`);
         const data = await response.json();
         if (data.results.length > 0) {
           setLocationData(data.results[0].geometry);
@@ -32,6 +29,7 @@ function LocationInfoPage() {
       <div id="map" className="my-8" style={{ height: '400px', width: '100%' }}>
         {locationData.lat && locationData.lng && (
           <iframe
+            title="Map"
             width="100%"
             height="400"
             style={{ border: 0 }}
@@ -44,4 +42,3 @@ function LocationInfoPage() {
 }
 
 export default LocationInfoPage;
-

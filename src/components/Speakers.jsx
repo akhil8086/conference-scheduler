@@ -80,6 +80,7 @@ function Speakers() {
               id="name"
               name="name"
               value={postData.name}
+              required
               onChange={handleInputChange}
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
@@ -93,6 +94,7 @@ function Speakers() {
               id="bio"
               name="bio"
               value={postData.bio}
+              required
               onChange={handleInputChange}
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />

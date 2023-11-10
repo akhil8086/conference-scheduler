@@ -80,6 +80,7 @@ function ConferenceSchedule() {
       name="talk"
       value={formData.talk}
       onChange={handleChange}
+      required
       placeholder="Talk"
       className="border p-2 rounded"
     />
@@ -90,6 +91,7 @@ function ConferenceSchedule() {
       name="time"
       value={formData.time}
       onChange={handleChange}
+      required
       placeholder="Time"
       className="border p-2 rounded"
     />
@@ -100,8 +102,6 @@ function ConferenceSchedule() {
     </button>
   ) : null}
 </form>
-
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
         {scheduleData.map((item, index) => (
           <div key={index} className="bg-blue-200 border p-4 rounded text-center">
