@@ -8,13 +8,13 @@ import EditIcon from '@mui/icons-material/Edit';
 const ConferenceCard = ({ conference, deleteConference , onEditClick}) => {
   return (
     <div className="bg-white border border-gray-300 shadow-md rounded p-4 m-4">
-      <h3 className="text-lg font-semibold mb-2" style={{display:"flex", justifyContent:"center"}}>{conference.name}</h3>
-      <p className="text-gray-700 mb-2">{conference.description}</p>
-      <p className="text-gray-700 mb-2">Start Date: {conference.startDate}</p>
-      <p className="text-gray-700 mb-2">start Time: {conference.startTime}</p>
-      <p className="text-gray-700 mb-2">End Date: {conference.endDate}</p>
-      <p className="text-gray-700 mb-2">End Time: {conference.endTime}</p>
-      <p className="text-gray-700 mb-2">Location: {conference.location}</p>
+      <h3 className="text-lg font-semibold mb-2 flex justify-center">{conference.name}</h3>
+      <p> <span className="font-bold"></span>{conference.description}</p>
+      <p> <span className="font-bold">Start Date:</span> {conference.startDate}</p>
+      <p> <span className="font-bold">start Time:</span> {conference.startTime}</p>
+      <p> <span className="font-bold">End Date:</span> {conference.endDate}</p>
+      <p> <span className="font-bold">End Time:</span> {conference.endTime}</p>
+      <p> <span className="font-bold">Location:</span> {conference.location}</p>
       <button
         onClick={() => deleteConference(conference.id)}
         className=" text-black p-2 rounded hover:bg-red-600 m-2"

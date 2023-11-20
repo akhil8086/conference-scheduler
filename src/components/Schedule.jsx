@@ -1,7 +1,5 @@
 
 
-
-
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -23,9 +21,11 @@ const Schedule = () => {
       try {
         const conferenceResponse = await axios.get(`http://localhost:8080/conferences/${id}`);
         setConference(conferenceResponse.data);
+        console.log(conferenceResponse.data);
 
         const scheduleResponse = await axios.get(`http://localhost:8080/conferences/schedule/view-all/${id}`);
         setRetrievedSchedule(scheduleResponse.data);
+        console.log(scheduleResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Error fetching conference data');
@@ -39,6 +39,7 @@ const Schedule = () => {
     try {
       if (editing) {
         await axios.put(`http://localhost:8080/conferences/${id}/${refId}`, editedScheduleData);
+        console.log(editedScheduleData);
         setEditing(false);
       } else {
         const response = await axios.post(`http://localhost:8080/conferences/schedule/${id}`, scheduleData);
@@ -47,6 +48,7 @@ const Schedule = () => {
 
       const updatedScheduleResponse = await axios.get(`http://localhost:8080/conferences/schedule/view-all/${id}`);
       setRetrievedSchedule(updatedScheduleResponse.data);
+      console.log(updatedScheduleResponse.data);
 
       setScheduleData({ talk: '', time: '', name: '', bio: '' });
       setEditedScheduleData({});
@@ -76,7 +78,7 @@ const Schedule = () => {
   };
 
   const editSchedule = (scheduleItem) => {
-    setRefId(scheduleItem.id)
+    setRefId(scheduleItem.id);
     setEditedScheduleData(scheduleItem);
     setEditing(true);
   };
@@ -98,6 +100,10 @@ const Schedule = () => {
                 <h2 className="text-lg font-bold"> {conference.endTime}</h2>
               </div>
             </div>
+          </div>
+
+          <div>
+            <h1 className="text-3xl font-bold mt-5 underline">Conference Topics and Speakers</h1>
           </div>
 
           <form className="mb-4 mx-auto max-w-sm mt-8">
@@ -167,7 +173,7 @@ const Schedule = () => {
 
           {retrievedSchedule && (
             <div>
-              <h3 className="text-xl font-bold mb-2">Schedules:</h3>
+              <h3 className="text-xl font-bold mb-2">Schedules</h3>
               <div className="flex flex-wrap -mx-4">
                 {retrievedSchedule.map((scheduleItem, index) => (
                   <div
@@ -191,14 +197,37 @@ const Schedule = () => {
               </div>
             </div>
           )}
+
+{retrievedSchedule && (
+  <div className="flex flex-col items-center">
+    <h1 className='text-3xl font-bold mt-5 underline m-5'>Conference Details</h1>
+    <div className="p-4 bg-gray-100 w-[500px] shadow-md">
+      <h3 className="text-2xl underline font-semibold text-center">{conference.name}</h3>
+      <p><span className="font-bold">Description:</span> {conference.description}</p>
+      <p><span className="font-bold">Start Date:</span> {conference.startDate}</p>
+      <p><span className="font-bold">Start Time:</span> {conference.startTime}</p>
+      <p><span className="font-bold">End Date:</span> {conference.endDate}</p>
+      <p><span className="font-bold">End Time:</span> {conference.endTime}</p>
+      <p><span className="font-bold">Location:</span> {conference.location}</p>
+    </div>
+    {retrievedSchedule.map((scheduleItem, index) => (
+      <div key={index} className="bg-gray-100 p-4 w-[500px] mt-1 shadow-md">
+        <p className="mb-2"><span className="font-bold">Speaker Name:</span> {scheduleItem.name}</p>
+        <p className="mb-2"><span className="font-bold">Topic:</span> {scheduleItem.talk}</p>
+        <p className="mb-2"><span className="font-bold">Time:</span> {scheduleItem.time}</p>
+        <p><span className="font-bold">Bio:</span> {scheduleItem.bio}</p>
+      </div>
+    ))}
+  </div>
+)}
+
         </div>
       ) : (
         <p>{error ? error : 'Loading conference details...'}</p>
       )}
-      <div>
-      </div>
     </div>
   );
 };
 
 export default Schedule;
+

@@ -1,7 +1,4 @@
 
-
-
-
 function Header() {
   return (
     <div className="w-full h-20 bg-[lightcoral] flex items-center">
