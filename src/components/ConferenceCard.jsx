@@ -1,6 +1,9 @@
 
 
 import { Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ConferenceCard = ({ conference, deleteConference , onEditClick}) => {
   return (
@@ -14,17 +17,17 @@ const ConferenceCard = ({ conference, deleteConference , onEditClick}) => {
       <p className="text-gray-700 mb-2">Location: {conference.location}</p>
       <button
         onClick={() => deleteConference(conference.id)}
-        className="bg-red-500 text-white p-2 rounded hover:bg-red-600 m-2"
+        className=" text-black p-2 rounded hover:bg-red-600 m-2"
       >
-        Delete
+       <DeleteIcon />
       </button>
       <Link to={`/schedule/${conference.id}`}>
-        <button className="bg-red-500 text-white p-2 rounded hover:bg-red-600 m-2">
-          Schedule
+        <button className=" text-black p-2 rounded hover:bg-red-600 m-2">
+          <CalendarMonthIcon />
         </button>
       </Link>
-      <button onClick={() => onEditClick(conference.id)} className="bg-red-500 text-white p-2 rounded hover:bg-red-600 m-2">
-  Edit
+      <button onClick={() => onEditClick(conference.id)} className=" text-black p-2 rounded hover:bg-red-600 m-2">
+  <EditIcon />
 </button>
     </div>
   );

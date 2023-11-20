@@ -6,6 +6,7 @@ import axios from 'axios';
 import Header from './Header';
 import ConferenceCard from './ConferenceCard';
 import ConferenceFormModal from './ConferenceFormModal';
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 
 function HomePage() {
   const [conferenceData, setConferenceData] = useState([]);
@@ -126,14 +127,15 @@ function HomePage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+     <div>
       <Header />
-      <div>
+      <div className="container mx-auto p-4">
+      <div className="flex flex-row justify-end mr-[50px]">
         <button
           onClick={handleViewConferenceClick}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
-          Add New Conference
+       <AddTwoToneIcon />
         </button>
       </div>
 
@@ -161,6 +163,7 @@ function HomePage() {
             ))}
         </div>
       )}
+    </div>
     </div>
   );
 }
