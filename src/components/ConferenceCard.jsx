@@ -23,7 +23,7 @@ const ConferenceCard = ({ conference, deleteConference , onEditClick}) => {
           Schedule
         </button>
       </Link>
-      <button onClick={() => onEditClick(conference.id)} className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600">
+      <button onClick={() => onEditClick(conference.id)} className="bg-red-500 text-white p-2 rounded hover:bg-red-600 m-2">
   Edit
 </button>
     </div>
