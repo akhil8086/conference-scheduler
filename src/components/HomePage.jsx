@@ -130,7 +130,7 @@ function HomePage() {
      <div>
       <Header />
       <div className="container mx-auto p-4">
-      <div className="flex flex-row justify-end mr-[50px]">
+      <div className="flex flex-row justify-end mr-[0px]">
         <button
           onClick={handleViewConferenceClick}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
@@ -169,8 +169,6 @@ function HomePage() {
 }
 
 export default HomePage;
-
-
 
 
 

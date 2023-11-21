@@ -73,7 +73,7 @@ const Schedule = () => {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
+ 
   const toggleEditing = () => {
     setEditing(!editing);
   };
@@ -102,23 +102,32 @@ const Schedule = () => {
               </div>
               </div>
 
-              <div>
               {retrievedSchedule && (
-        <div>
-          <h1 className="text-lg font-bold my-2">Speakers</h1>
-          {retrievedSchedule.map((scheduleItem, index) => (
-            <div
-              key={index}
-            >
-              <div className="bg-white p-4 rounded-md">
-                <p className="text-lg font-bold">{scheduleItem.name}</p>
-                <p className="text-lg font-bold">{scheduleItem.bio}</p>
+            <div>
+              <h3 className="text-xl font-bold mb-2">Schedules</h3>
+              <div className="flex flex-wrap -mx-4">
+                {retrievedSchedule.map((scheduleItem, index) => (
+                  <div
+                    key={index}
+                    className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-4"
+                  >
+                    <div className="bg-white border border-black-300 rounded p-4">
+                      <p><span className="font-bold">Topic:</span> {scheduleItem.talk}</p>
+                      <p><span className="font-bold">Time:</span> {scheduleItem.time}</p>
+                      <p><span className="font-bold">Speaker Name:</span> {scheduleItem.name}</p>
+                      <p><span className="font-bold">Designation:</span> {scheduleItem.bio}</p>
+                      <button
+                        className="bg-green-500 text-white rounded px-4 py-2 hover:bg-green-600 mt-2"
+                        onClick={() => editSchedule(scheduleItem)}
+                      >
+                        <EditNoteIcon />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-      )}
-      </div>
+          )}
            
           </div>
 
@@ -161,7 +170,7 @@ const Schedule = () => {
               </label>
 
               <label className="block mb-2 text-xl">
-                Profession:
+                Designation:
                 <input
                   className="border border-gray-300 rounded px-3 py-2 w-full"
                   type="bio"
@@ -191,32 +200,6 @@ const Schedule = () => {
             </div>
           </form>
 
-          {retrievedSchedule && (
-            <div>
-              <h3 className="text-xl font-bold mb-2">Schedules</h3>
-              <div className="flex flex-wrap -mx-4">
-                {retrievedSchedule.map((scheduleItem, index) => (
-                  <div
-                    key={index}
-                    className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-4"
-                  >
-                    <div className="bg-white border border-black-300 rounded p-4">
-                      <p><span className="font-bold">Topic:</span> {scheduleItem.talk}</p>
-                      <p><span className="font-bold">Time:</span> {scheduleItem.time}</p>
-                      <p><span className="font-bold">Speaker Name:</span> {scheduleItem.name}</p>
-                      <p><span className="font-bold">Profession:</span> {scheduleItem.bio}</p>
-                      <button
-                        className="bg-green-500 text-white rounded px-4 py-2 hover:bg-green-600 mt-2"
-                        onClick={() => editSchedule(scheduleItem)}
-                      >
-                        <EditNoteIcon />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {retrievedSchedule && (
             <div className="flex flex-col items-center">
