@@ -11,8 +11,8 @@ const Schedule = () => {
   const [conference, setConference] = useState(null);
   const [scheduleData, setScheduleData] = useState({ talk: '', time: '', name: '', bio: '' });
   const [retrievedSchedule, setRetrievedSchedule] = useState(null);
-  const [editing, setEditing] = useState(false); 
-  const [editedScheduleData, setEditedScheduleData] = useState({}); 
+  const [editing, setEditing] = useState(false);
+  const [editedScheduleData, setEditedScheduleData] = useState({});
   const [error, setError] = useState(null);
   const [refId, setRefId] = useState(null);
 
@@ -73,6 +73,7 @@ const Schedule = () => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const toggleEditing = () => {
     setEditing(!editing);
   };
@@ -99,7 +100,26 @@ const Schedule = () => {
                 <h2 className="text-lg font-bold"> {conference.endDate}</h2>
                 <h2 className="text-lg font-bold"> {conference.endTime}</h2>
               </div>
+              </div>
+
+              <div>
+              {retrievedSchedule && (
+        <div>
+          <h1 className="text-lg font-bold my-2">Speakers</h1>
+          {retrievedSchedule.map((scheduleItem, index) => (
+            <div
+              key={index}
+            >
+              <div className="bg-white p-4 rounded-md">
+                <p className="text-lg font-bold">{scheduleItem.name}</p>
+                <p className="text-lg font-bold">{scheduleItem.bio}</p>
+              </div>
             </div>
+          ))}
+        </div>
+      )}
+      </div>
+           
           </div>
 
           <div>
@@ -141,7 +161,7 @@ const Schedule = () => {
               </label>
 
               <label className="block mb-2 text-xl">
-                Bio:
+                Profession:
                 <input
                   className="border border-gray-300 rounded px-3 py-2 w-full"
                   type="bio"
@@ -184,7 +204,7 @@ const Schedule = () => {
                       <p><span className="font-bold">Topic:</span> {scheduleItem.talk}</p>
                       <p><span className="font-bold">Time:</span> {scheduleItem.time}</p>
                       <p><span className="font-bold">Speaker Name:</span> {scheduleItem.name}</p>
-                      <p><span className="font-bold">Bio:</span> {scheduleItem.bio}</p>
+                      <p><span className="font-bold">Profession:</span> {scheduleItem.bio}</p>
                       <button
                         className="bg-green-500 text-white rounded px-4 py-2 hover:bg-green-600 mt-2"
                         onClick={() => editSchedule(scheduleItem)}
@@ -198,29 +218,20 @@ const Schedule = () => {
             </div>
           )}
 
-{retrievedSchedule && (
-  <div className="flex flex-col items-center">
-    <h1 className='text-3xl font-bold mt-5 underline m-5'>Conference Details</h1>
-    <div className="p-4 bg-gray-100 w-[500px] shadow-md">
-      <h3 className="text-2xl underline font-semibold text-center">{conference.name}</h3>
-      <p><span className="font-bold">Description:</span> {conference.description}</p>
-      <p><span className="font-bold">Start Date:</span> {conference.startDate}</p>
-      <p><span className="font-bold">Start Time:</span> {conference.startTime}</p>
-      <p><span className="font-bold">End Date:</span> {conference.endDate}</p>
-      <p><span className="font-bold">End Time:</span> {conference.endTime}</p>
-      <p><span className="font-bold">Location:</span> {conference.location}</p>
-    </div>
-    {retrievedSchedule.map((scheduleItem, index) => (
-      <div key={index} className="bg-gray-100 p-4 w-[500px] mt-1 shadow-md">
-        <p className="mb-2"><span className="font-bold">Speaker Name:</span> {scheduleItem.name}</p>
-        <p className="mb-2"><span className="font-bold">Topic:</span> {scheduleItem.talk}</p>
-        <p className="mb-2"><span className="font-bold">Time:</span> {scheduleItem.time}</p>
-        <p><span className="font-bold">Bio:</span> {scheduleItem.bio}</p>
-      </div>
-    ))}
-  </div>
-)}
-
+          {retrievedSchedule && (
+            <div className="flex flex-col items-center">
+              <h1 className='text-3xl font-bold mt-5 underline m-5'>Conference Details</h1>
+              <div className="p-4 bg-gray-100 w-[500px] shadow-md">
+                <h3 className="text-2xl underline font-semibold text-center">{conference.name}</h3>
+                <p><span className="font-bold">Description:</span> {conference.description}</p>
+                <p><span className="font-bold">Start Date:</span> {conference.startDate}</p>
+                <p><span className="font-bold">Start Time:</span> {conference.startTime}</p>
+                <p><span className="font-bold">End Date:</span> {conference.endDate}</p>
+                <p><span className="font-bold">End Time:</span> {conference.endTime}</p>
+                <p><span className="font-bold">Location:</span> {conference.location}</p>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <p>{error ? error : 'Loading conference details...'}</p>
@@ -230,4 +241,3 @@ const Schedule = () => {
 };
 
 export default Schedule;
-

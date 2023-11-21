@@ -1,5 +1,6 @@
 
 
+
 const ConferenceFormModal = ({ showModal, onClose, onSubmit, formData, onChange }) => {
     return (
       <div className={`${showModal ? 'block' : 'hidden'} fixed inset-0 z-10 overflow-y-auto`}>
