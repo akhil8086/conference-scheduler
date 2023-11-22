@@ -5,17 +5,28 @@ import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EditIcon from '@mui/icons-material/Edit';
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import EventIcon from '@mui/icons-material/Event';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 const ConferenceCard = ({ conference, deleteConference , onEditClick}) => {
   return (
-    <div className="bg-white border border-gray-300 shadow-md rounded p-4 m-4">
-      <h3 className="text-lg font-semibold mb-2 flex justify-center">{conference.name}</h3>
-      <p> <span className="font-bold"></span>{conference.description}</p>
-      <p> <span className="font-bold">Start Date:</span> {conference.startDate}</p>
-      <p> <span className="font-bold">start Time:</span> {conference.startTime}</p>
-      <p> <span className="font-bold">End Date:</span> {conference.endDate}</p>
-      <p> <span className="font-bold">End Time:</span> {conference.endTime}</p>
-      <p> <span className="font-bold">Location:</span> {conference.location}</p>
+    <div className="bg-purple-100 border border-gray-300 shadow-md rounded m-4 w-[600px] py-6">
+      <h3 className="text-xl font-semibold mb-3 flex justify-center text-[30px] text-red-700 underline">{conference.name}</h3>
+      <p className="font-bold px-[50px] text-[18px] mt-[20px] mb-[20px] flex flex-row justify-center">{conference.description}</p>
+      <div className="flex flex-col items-center">
+      <p className="font-semibold text-[20px] mb-[10px] text-[#007FFF]"> From </p>
+      <div className="flex flex-row gap-[50px]">
+      <p className="font-bold text-[20px] "><EventIcon/> {conference.startDate}</p>
+      <p className="font-bold text-[20px] mb-[20px]"><AccessTimeFilledIcon /> {conference.startTime}</p>
+      </div>
+      <p className="font-semibold text-[20px] mb-[10px] text-[#007FFF]"> To </p>
+      <div className="flex flex-row gap-[50px]">
+      <p className="font-bold text-[20px]"> <EventIcon /> {conference.endDate}</p>
+      <p className="font-bold text-[20px] mb-[20px]"><AccessTimeFilledIcon />  {conference.endTime}</p>
+      </div>
+      <p className="font-bold text-[20px]"><LocationOnIcon />   {conference.location}</p>
+      </div>
+      <div className="flex flex-row justify-around p-[20px]">
       <button
         onClick={() => deleteConference(conference.id)}
         className=" text-black p-2 rounded hover:bg-red-600 m-2"
@@ -30,6 +41,7 @@ const ConferenceCard = ({ conference, deleteConference , onEditClick}) => {
       <button onClick={() => onEditClick(conference.id)} className=" text-black p-2 rounded hover:bg-red-600 m-2">
   <EditIcon />
 </button>
+</div>
     </div>
   );
 };

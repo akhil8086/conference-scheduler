@@ -5,4 +5,8 @@
 
 body{
     background-color: rgb(204, 214, 225);
+    background-image: url("https://bergen.edu/wp-content/uploads/Academic-Calendar-header.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

@@ -17,7 +17,7 @@ const ConferenceFormModal = ({ showModal, onClose, onSubmit, formData, onChange 
             aria-modal="true"
             aria-labelledby="modal-headline"
           >
-            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 ">
               <h2 className="text-2xl font-bold mt-8 text-center">New Conference</h2>
               <form onSubmit={onSubmit}>
                 <div className="mb-4">

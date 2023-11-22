@@ -133,7 +133,7 @@ function HomePage() {
       <div className="flex flex-row justify-end mr-[0px]">
         <button
           onClick={handleViewConferenceClick}
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          className="bg-green-400 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
        <AddTwoToneIcon />
         </button>
