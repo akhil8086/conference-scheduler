@@ -8,7 +8,7 @@ import ConferenceCard from './ConferenceCard';
 import ConferenceFormModal from './ConferenceFormModal';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 
-function HomePage() {
+const HomePage = () => {
   const [conferenceData, setConferenceData] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -53,7 +53,7 @@ function HomePage() {
           endTime: '',
           location: '',
         });
-        console.log(response);
+      
         handleCloseModal();
         setReloadData(true);
       })
@@ -68,7 +68,7 @@ function HomePage() {
       .then((response) => {
         setConferenceData(response.data);
         setShowData(true);
-        console.log(response);
+       
         setReloadData(false);
       })
       .catch((error) => {
@@ -79,9 +79,7 @@ function HomePage() {
   const deleteConference = (id) => {
     axios
       .delete(`http://localhost:8080/conferences/${id}`)
-      .then((response) => {
-        console.log(`Conference with ID ${id} deleted successfully.`);
-        console.log(response);
+      .then(() => {
         setConferenceData((prevData) =>
           prevData.filter((conference) => conference.id !== id)
         );
@@ -101,7 +99,6 @@ function HomePage() {
   const handleEditConference = (id) => {
     setEditMode(true);
     setId(id);
-
     axios.get(`http://localhost:8080/conferences/${id}`)
       .then((response) => {
         setFormData(response.data);

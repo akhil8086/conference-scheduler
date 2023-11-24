@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
 
-
-
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
