@@ -1,5 +1,4 @@
 
-
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -66,6 +65,23 @@ const Schedule = () => {
       });
     });
     return groupedSchedule;
+  };
+
+  const generateRows = () => {
+    const rows = [];
+    const startDate = new Date(conference.startDate);
+    const endDate = new Date(conference.endDate);
+    const numberOfDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    for (let day = 1; day <= numberOfDays; day++) {
+      const daySchedule = retrievedSchedule ? retrievedSchedule.filter(item => item.day == day) : [];
+      rows.push({
+        day: day,
+        schedule: daySchedule,
+      });
+    }
+
+    return rows;
   };
 
   const postSchedule = async () => {
@@ -154,16 +170,15 @@ const Schedule = () => {
                   <p className="font-bold text-2xl mt-[20px] ">{conference.endDate}</p>
                 </div>
 
-                {Object.entries(groupByDay(retrievedSchedule)).map(([day, daySchedule]) => (
-                  <div key={day} className="mb-5">
+                {generateRows().map((row, index) => (
+                  <div key={index} className="mb-5">
                     <div className='border border-solid bg-green-100 p-[5px] rounded-[10px] mt-[10px] flex flex-row justify-around'>
                       <p className="font-bold  ">{conference.startTime}</p>
-                      <h4 className="font-bold">{`Day ${day}`}</h4>
+                      <h4 className="font-bold">{`Day ${row.day}`}</h4>
                       <p className="font-bold  ">{conference.endTime}</p>
                     </div>
                     <div className="flex flex-wrap">
-                      
-                      {daySchedule.map((scheduleItem, index) => (
+                      {row.schedule.map((scheduleItem, index) => (
                         <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 my-4 ">
                           <p className="font-bold text-sm"> {scheduleItem.duration}</p>
                           <div className="bg-white border border-black-300 rounded p-4 h-full">
@@ -227,3 +242,4 @@ const Schedule = () => {
 };
 
 export default Schedule;
+
