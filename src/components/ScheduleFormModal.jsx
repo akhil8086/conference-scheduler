@@ -21,6 +21,7 @@ const ScheduleFormModal = ({
                 className="border border-gray-300 rounded px-3 py-2 w-full"
                 type="text"
                 name="talk"
+                required
                 value={editing ? editedScheduleData.talk : scheduleData.talk}
                 onChange={handleInputChange}
               />
@@ -32,6 +33,7 @@ const ScheduleFormModal = ({
               className="border border-gray-300 rounded px-3 py-2 w-full"
               type="time"
               name="time"
+              required
               value={editing ? editedScheduleData.time : scheduleData.time}
               onChange={handleInputChange}
             />
@@ -43,6 +45,7 @@ const ScheduleFormModal = ({
               className="border border-gray-300 rounded px-3 py-2 w-full"
               name="duration"
               value={editing ? editedScheduleData.duration : scheduleData.duration}
+              required
               onChange={handleInputChange}
             >
               <option value="1hrs">1 hrs</option>
@@ -56,6 +59,7 @@ const ScheduleFormModal = ({
               className="border border-gray-300 rounded px-3 py-2 w-full"
               type="name"
               name="name"
+              required
               value={editing ? editedScheduleData.name : scheduleData.name}
               onChange={handleInputChange}
             />
@@ -67,6 +71,7 @@ const ScheduleFormModal = ({
               <select
                 className="border border-gray-300 rounded px-3 py-2 w-full"
                 name="day"
+                required
                 value={editing ? editedScheduleData.day : scheduleData.day}
                 onChange={handleInputChange}
               >
@@ -85,6 +90,7 @@ const ScheduleFormModal = ({
               className="border border-gray-300 rounded px-3 py-2 w-full"
               type="bio"
               name="bio"
+              required
               value={editing ? editedScheduleData.bio : scheduleData.bio}
               onChange={handleInputChange}
             />

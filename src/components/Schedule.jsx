@@ -1,11 +1,11 @@
 
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import ScheduleFormModal from './ScheduleFormModal';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import ScheduleFormModal from './ScheduleFormModal';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const Schedule = () => {
   const params = useParams();
@@ -33,9 +33,7 @@ const Schedule = () => {
         const conferenceResponse = await axios.get(`http://localhost:8080/conferences/${id}`);
         setConference(conferenceResponse.data);
 
-        const scheduleResponse = await axios.get(
-          `http://localhost:8080/conferences/schedule/view-all/${id}`
-        );
+        const scheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${id}`);
         setRetrievedSchedule(scheduleResponse.data);
 
         const startDate = new Date(conferenceResponse.data.startDate);
@@ -87,15 +85,13 @@ const Schedule = () => {
   const postSchedule = async () => {
     try {
       if (editing) {
-        await axios.put(`http://localhost:8080/conferences/${id}/${refId}`, editedScheduleData);
+        await axios.put(`http://localhost:8080/schedule/${id}/${refId}`, editedScheduleData);
         setEditing(false);
       } else {
-        await axios.post(`http://localhost:8080/conferences/schedule/${id}`, scheduleData);
+        await axios.post(`http://localhost:8080/schedule/${id}`, scheduleData);
       }
 
-      const updatedScheduleResponse = await axios.get(
-        `http://localhost:8080/conferences/schedule/view-all/${id}`
-      );
+      const updatedScheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${id}`);
       setRetrievedSchedule(updatedScheduleResponse.data);
 
       setScheduleData({
@@ -111,6 +107,18 @@ const Schedule = () => {
     } catch (error) {
       console.error('Error posting schedule:', error.message);
       setError('Error posting schedule. Please try again.');
+    }
+  };
+
+  const deleteSchedule = async (conferenceId, scheduleId) => {
+    try {
+      await axios.delete(`http://localhost:8080/schedule/${conferenceId}/${scheduleId}`);
+
+      const updatedScheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${conferenceId}`);
+      setRetrievedSchedule(updatedScheduleResponse.data);
+    } catch (error) {
+      console.error('Error deleting schedule:', error.message);
+      setError('Error deleting schedule. Please try again.');
     }
   };
 
@@ -134,7 +142,8 @@ const Schedule = () => {
   };
 
   const editSchedule = (scheduleItem) => {
-    setRefId(scheduleItem.id);
+    console.log(scheduleItem)
+    setRefId(scheduleItem.scheduleId);
     setEditedScheduleData(scheduleItem);
     setEditing(true);
     openModal();
@@ -192,6 +201,12 @@ const Schedule = () => {
                             >
                               <EditNoteIcon />
                             </button>
+                            <button
+                              className="bg-red-500 text-white rounded px-4 py-2 mt-2 hover:bg-red-600"
+                              onClick={() => deleteSchedule(id, scheduleItem.scheduleId)}
+                            >
+                              <DeleteOutlineIcon />
+                            </button>
                           </div>
                         </div>
                       ))}
@@ -242,4 +257,3 @@ const Schedule = () => {
 };
 
 export default Schedule;
-
