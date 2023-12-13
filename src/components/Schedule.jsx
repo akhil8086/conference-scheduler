@@ -1,16 +1,24 @@
 
+
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchConference,
+  fetchSchedule,
+  postSchedule,
+  deleteSchedule,
+} from './scheduleSlice';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import ScheduleFormModal from './ScheduleFormModal';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const Schedule = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const id = params.id;
-  const [conference, setConference] = useState(null);
+  const { conference, error } = useSelector((state) => state.schedule);
   const [scheduleData, setScheduleData] = useState({
     talk: '',
     time: '',
@@ -22,103 +30,72 @@ const Schedule = () => {
   const [retrievedSchedule, setRetrievedSchedule] = useState(null);
   const [editing, setEditing] = useState(false);
   const [editedScheduleData, setEditedScheduleData] = useState({});
-  const [error, setError] = useState(null);
   const [refId, setRefId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dayOptions, setDayOptions] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const conferenceResponse = await axios.get(`http://localhost:8080/conferences/${id}`);
-        setConference(conferenceResponse.data);
-
-        const scheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${id}`);
-        setRetrievedSchedule(scheduleResponse.data);
-
-        const startDate = new Date(conferenceResponse.data.startDate);
-        const endDate = new Date(conferenceResponse.data.endDate);
-        const numberOfDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-
-        const dayOptions = Array.from({ length: numberOfDays }, (_, index) => String(index + 1));
-        setDayOptions(dayOptions);
-      } catch (error) {
-        console.error('Error fetching data:', error.message);
-        setError('Error fetching conference data. Please try again later.');
-      }
+      await dispatch(fetchConference(id));
+      const scheduleResponse = await dispatch(fetchSchedule(id));
+      setRetrievedSchedule(scheduleResponse.payload);
     };
 
     fetchData();
-  }, [id]);
+  }, [dispatch, id]);
 
-  const groupByDay = (schedule) => {
-    const groupedSchedule = {};
-    schedule.forEach((item) => {
-      if (!groupedSchedule[item.day]) {
-        groupedSchedule[item.day] = [];
-      }
-      groupedSchedule[item.day].push(item);
-      groupedSchedule[item.day].sort((a, b) => {
-        return a.time.localeCompare(b.time);
-      });
-    });
-    return groupedSchedule;
-  };
+  useEffect(() => {
+    if (conference) {
+      const startDate = new Date(conference.startDate);
+      const endDate = new Date(conference.endDate);
+      const numberOfDays =
+        Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
 
-  const generateRows = () => {
-    const rows = [];
-    const startDate = new Date(conference.startDate);
-    const endDate = new Date(conference.endDate);
-    const numberOfDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-
-    for (let day = 1; day <= numberOfDays; day++) {
-      const daySchedule = retrievedSchedule ? retrievedSchedule.filter(item => item.day == day) : [];
-      rows.push({
-        day: day,
-        schedule: daySchedule,
-      });
+      const dayOptions = Array.from(
+        { length: numberOfDays },
+        (_, index) => String(index + 1)
+      );
+      setDayOptions(dayOptions);
     }
+  }, [conference]);
 
-    return rows;
+  const resetScheduleData = () => {
+    setScheduleData({
+      talk: '',
+      time: '',
+      duration: '1hrs',
+      name: '',
+      day: '1',
+      bio: '',
+    });
+    setEditedScheduleData({});
   };
 
-  const postSchedule = async () => {
+  const postScheduleItem = async () => {
     try {
       if (editing) {
-        await axios.put(`http://localhost:8080/schedule/${id}/${refId}`, editedScheduleData);
-        setEditing(false);
+        await dispatch(
+          postSchedule({
+            id,
+            data: editedScheduleData,
+            editing,
+            refId,
+          })
+        );
       } else {
-        await axios.post(`http://localhost:8080/schedule/${id}`, scheduleData);
+        await dispatch(postSchedule({ id, data: scheduleData, editing, refId }));
       }
 
-      const updatedScheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${id}`);
-      setRetrievedSchedule(updatedScheduleResponse.data);
+      
+      const updatedScheduleResponse = await dispatch(fetchSchedule(id));
+      setRetrievedSchedule(updatedScheduleResponse.payload);
 
-      setScheduleData({
-        talk: '',
-        time: '',
-        duration: '1hrs',
-        name: '',
-        day: '1',
-        bio: '',
-      });
-      setEditedScheduleData({});
+      resetScheduleData();
       closeModal();
+      setEditing(false);
     } catch (error) {
       console.error('Error posting schedule:', error.message);
-      setError('Error posting schedule. Please try again.');
-    }
-  };
-
-  const deleteSchedule = async (conferenceId, scheduleId) => {
-    try {
-      await axios.delete(`http://localhost:8080/schedule/${conferenceId}/${scheduleId}`);
-
-      const updatedScheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${conferenceId}`);
-      setRetrievedSchedule(updatedScheduleResponse.data);
-    } catch (error) {
-      console.error('Error deleting schedule:', error.message);
-      setError('Error deleting schedule. Please try again.');
+   
     }
   };
 
@@ -137,12 +114,41 @@ const Schedule = () => {
     }
   };
 
+  const deleteScheduleItem = async (scheduleId) => {
+    try {
+      await dispatch(deleteSchedule({ conferenceId: id, scheduleId }));
+
+   
+      const updatedScheduleResponse = await dispatch(fetchSchedule(id));
+      setRetrievedSchedule(updatedScheduleResponse.payload);
+    } catch (error) {
+      console.error('Error deleting schedule:', error.message);
+    }
+  };
+
+  function generateRows() {
+    const rows = [];
+    const startDate = new Date(conference.startDate);
+    const endDate = new Date(conference.endDate);
+    const numberOfDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    for (let day = 1; day <= numberOfDays; day++) {
+      const daySchedule = retrievedSchedule ? retrievedSchedule.filter(item => item.day == day) : [];
+      rows.push({
+        day: day,
+        schedule: daySchedule,
+      });
+    }
+
+    return rows;
+  }
+
   const toggleEditing = () => {
     setEditing(!editing);
   };
 
   const editSchedule = (scheduleItem) => {
-    console.log(scheduleItem)
+    console.log(scheduleItem);
     setRefId(scheduleItem.scheduleId);
     setEditedScheduleData(scheduleItem);
     setEditing(true);
@@ -174,11 +180,6 @@ const Schedule = () => {
             {retrievedSchedule && (
               <div className="w-full mb-8">
                 <h3 className="text-xl font-bold mb-2">Schedules</h3>
-                <div className="flex flex-row justify-around">
-                  <p className="font-bold text-2xl mt-[20px] ">{conference.startDate}</p>
-                  <p className="font-bold text-2xl mt-[20px] ">{conference.endDate}</p>
-                </div>
-
                 {generateRows().map((row, index) => (
                   <div key={index} className="mb-5">
                     <div className='border border-solid bg-green-100 p-[5px] rounded-[10px] mt-[10px] flex flex-row justify-around'>
@@ -203,7 +204,7 @@ const Schedule = () => {
                             </button>
                             <button
                               className="bg-red-500 text-white rounded px-4 py-2 mt-2 hover:bg-red-600"
-                              onClick={() => deleteSchedule(id, scheduleItem.scheduleId)}
+                              onClick={() => deleteScheduleItem(scheduleItem.scheduleId)}
                             >
                               <DeleteOutlineIcon />
                             </button>
@@ -223,7 +224,7 @@ const Schedule = () => {
               {isModalOpen && (
                 <ScheduleFormModal
                   closeModal={closeModal}
-                  postSchedule={postSchedule}
+                  postSchedule={postScheduleItem}
                   handleInputChange={handleInputChange}
                   scheduleData={scheduleData}
                   editedScheduleData={editedScheduleData}
