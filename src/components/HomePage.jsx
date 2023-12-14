@@ -213,7 +213,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchConferences, postConference, updateConference, deleteConference } from './conferenceSlice';
+import { fetchConferences, postConference, updateConference, deleteConference } from './redux/conferenceSlice';
 import axios from 'axios';
 import Header from './Header';
 import ConferenceCard from './ConferenceCard';
