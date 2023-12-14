@@ -211,6 +211,8 @@
 
 
 
+
+
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchConferences, postConference, updateConference, deleteConference } from './redux/conferenceSlice';
@@ -219,11 +221,12 @@ import Header from './Header';
 import ConferenceCard from './ConferenceCard';
 import ConferenceFormModal from './ConferenceFormModal';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const conferenceData = useSelector((state) => state.conferences.conferenceData);
-  const totalPages = useSelector((state) => state.conferences.totalPages);
+  const conferenceData = useSelector((state) => state.conferences.conferenceData) || [];
+  const totalPages = useSelector((state) => state.conferences.totalPages) || 1;
 
   const [formData, setFormData] = useState({
     name: '',
@@ -249,7 +252,7 @@ const HomePage = () => {
   const updateConferenceData = () => {
     dispatch(fetchConferences({ page: pageNumber, size: pageSize }))
       .then((response) => {
-        if (response.payload.content.length === 0) {
+        if (response.payload.content && response.payload.content.length === 0) {
           setPageNumber((prevPage) => Math.max(prevPage + 1, 1));
         }
       })
@@ -262,11 +265,11 @@ const HomePage = () => {
     updateConferenceData();
   }, [dispatch, pageNumber, pageSize, reloadData]);
 
-  const handleEditConference = (id) => {
+  const handleEditConference = (conferenceId) => {
     setEditMode(true);
-    setId(id);
+    setId(conferenceId);
     axios
-      .get(`http://localhost:8080/conferences/${id}`)
+      .get(`${BASE_URL}/conferences/${conferenceId}`)
       .then((response) => {
         setFormData(response.data);
         setShowModal(true);
@@ -278,13 +281,12 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (editMode) {
       dispatch(updateConference({ id, formData }))
         .then(() => {
-        
           updateConferenceData();
-          handleCloseModal(); 
+          handleCloseModal();
         })
         .catch((error) => {
           console.error(`Error updating conference data:`, error);
@@ -292,15 +294,15 @@ const HomePage = () => {
     } else {
       dispatch(postConference(formData))
         .then(() => {
-         
           updateConferenceData();
-          handleCloseModal(); 
+          handleCloseModal();
         })
         .catch((error) => {
           console.error(`Error posting conference data:`, error);
         });
     }
   };
+  
 
   const handleDeleteConference = (conferenceId) => {
     dispatch(deleteConference(conferenceId))
@@ -308,7 +310,7 @@ const HomePage = () => {
         updateConferenceData();
       })
       .catch((error) => {
-        console.error(`Error deleting conference with ID ${id}:`, error);
+        console.error(`Error deleting conference with ID ${conferenceId}:`, error);
       });
   };
 
@@ -384,3 +386,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+

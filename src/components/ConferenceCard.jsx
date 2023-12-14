@@ -9,13 +9,13 @@ import EventIcon from '@mui/icons-material/Event';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
 const timeConverter = (time) => {
-  if (!time) return ''; // Handle the case where time is undefined or null
+  if (!time) return ''; 
 
   const [hour, minute] = time.split(':');
   const parsedHour = parseInt(hour, 10);
   
   if (isNaN(parsedHour)) {
-    return ''; // Handle the case where hour is not a valid number
+    return ''; 
   }
 
   const period = parsedHour >= 12 ? 'PM' : 'AM';

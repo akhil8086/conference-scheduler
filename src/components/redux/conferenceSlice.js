@@ -1,26 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const fetchConferences = createAsyncThunk('conferences/fetch', async (pageInfo) => {
   const { page, size } = pageInfo;
-  const response = await axios.get(`http://localhost:8080/conferences/pageable?page=${page - 1}&size=${size}&sort=conferenceId,desc`);
+  const response = await axios.get(`${BASE_URL}/conferences/pageable?page=${page - 1}&size=${size}&sort=conferenceId,desc`);
   return response.data;
 });
 
 
 export const postConference = createAsyncThunk('conferences/post', async (formData) => {
-  const response = await axios.post('http://localhost:8080/conferences', formData);
+  const response = await axios.post(`${BASE_URL}/conferences`, formData);
   return response.data;
 });
 
 
 export const updateConference = createAsyncThunk('conferences/update', async ({ id, formData }) => {
-  const response = await axios.put(`http://localhost:8080/conferences/update/${id}`, formData);
+  const response = await axios.put(`${BASE_URL}/conferences/update/${id}`, formData);
   return response.data;
 });
 
 export const deleteConference = createAsyncThunk('conferences/delete', async (conferenceId) => {
-  await axios.delete(`http://localhost:8080/conferences/${conferenceId}`);
+  await axios.delete(`${BASE_URL}/conferences/${conferenceId}`);
   return conferenceId;
 });
 

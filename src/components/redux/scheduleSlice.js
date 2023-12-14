@@ -1,35 +1,36 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 
 export const fetchConference = createAsyncThunk('schedule/fetchConference', async (id) => {
-  const response = await axios.get(`http://localhost:8080/conferences/${id}`);
+  const response = await axios.get(`${BASE_URL}/conferences/${id}`);
   return response.data;
 });
 
 
 export const fetchSchedule = createAsyncThunk('schedule/fetchSchedule', async (id) => {
-  const response = await axios.get(`http://localhost:8080/schedule/view-all/${id}`);
+  const response = await axios.get(`${BASE_URL}/schedule/view-all/${id}`);
   return response.data;
 });
 
 
 export const postSchedule = createAsyncThunk('schedule/postSchedule', async ({ id, data, editing, refId }) => {
   if (editing) {
-    await axios.put(`http://localhost:8080/schedule/${id}/${refId}`, data);
+    await axios.put(`${BASE_URL}/schedule/${id}/${refId}`, data);
   } else {
-    await axios.post(`http://localhost:8080/schedule/${id}`, data);
+    await axios.post(`${BASE_URL}/schedule/${id}`, data);
   }
 
-  const updatedScheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${id}`);
+  const updatedScheduleResponse = await axios.get(`${BASE_URL}/schedule/view-all/${id}`);
   return updatedScheduleResponse.data;
 });
 
 
 export const deleteSchedule = createAsyncThunk('schedule/deleteSchedule', async ({ conferenceId, scheduleId }) => {
-  await axios.delete(`http://localhost:8080/schedule/${conferenceId}/${scheduleId}`);
+  await axios.delete(`${BASE_URL}/schedule/${conferenceId}/${scheduleId}`);
 
-  const updatedScheduleResponse = await axios.get(`http://localhost:8080/schedule/view-all/${conferenceId}`);
+  const updatedScheduleResponse = await axios.get(`${BASE_URL}/schedule/view-all/${conferenceId}`);
   return updatedScheduleResponse.data;
 });
 
