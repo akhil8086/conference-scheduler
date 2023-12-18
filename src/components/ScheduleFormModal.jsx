@@ -73,7 +73,6 @@ const ScheduleFormModal = ({
               }`}
               type="text"
               name="talk"
-              required
               value={editing ? editedScheduleData.talk : scheduleData.talk}
               onChange={handleInputChange}
             />
@@ -90,7 +89,6 @@ const ScheduleFormModal = ({
               }`}
               type="time"
               name="time"
-              required
               value={editing ? editedScheduleData.time : scheduleData.time}
               onChange={handleInputChange}
             />
@@ -107,11 +105,9 @@ const ScheduleFormModal = ({
               }`}
               name="duration"
               value={editing ? editedScheduleData.duration : scheduleData.duration}
-              required
               onChange={handleInputChange}
             >
               <option value="1hrs">1 hr</option>
-              {/* <option value="2hrs">2 hrs</option> */}
             </select>
             {errors.duration && (
               <p className="text-red-500 mt-1">{errors.duration}</p>
@@ -126,7 +122,6 @@ const ScheduleFormModal = ({
               }`}
               type="text"
               name="name"
-              required
               value={editing ? editedScheduleData.name : scheduleData.name}
               onChange={handleInputChange}
             />
@@ -142,7 +137,6 @@ const ScheduleFormModal = ({
                 errors.day ? 'border-red-500' : ''
               }`}
               name="day"
-              required
               value={editing ? editedScheduleData.day : scheduleData.day}
               onChange={handleInputChange}
             >
@@ -165,7 +159,6 @@ const ScheduleFormModal = ({
               }`}
               type="text"
               name="bio"
-              required
               value={editing ? editedScheduleData.bio : scheduleData.bio}
               onChange={handleInputChange}
             />

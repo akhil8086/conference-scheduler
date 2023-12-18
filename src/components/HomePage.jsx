@@ -1,13 +1,14 @@
 
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchConferences, postConference, updateConference, deleteConference } from './redux/conferenceSlice';
-import axios from 'axios';
+import { fetchConferences, postConference, updateConference, deleteConference, fetchConferenceById } from './redux/conferenceSlice';
 import Header from './Header';
 import ConferenceCard from './ConferenceCard';
 import ConferenceFormModal from './ConferenceFormModal';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const HomePage = () => {
   });
   const [id, setId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [reloadData, setReloadData] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(2);
@@ -35,7 +35,7 @@ const HomePage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const updateConferenceData = () => {
+  const updateConferenceData = useCallback(() => {
     dispatch(fetchConferences({ page: pageNumber, size: pageSize }))
       .then((response) => {
         if (response.payload.content && response.payload.content.length === 0) {
@@ -45,21 +45,16 @@ const HomePage = () => {
       .catch((error) => {
         console.error('Error fetching conference data:', error);
       });
-  };
+  }, [dispatch, pageNumber, pageSize]);
 
   useEffect(() => {
     updateConferenceData();
-  }, [dispatch, pageNumber, pageSize, reloadData]);
+  }, [updateConferenceData]);
 
   const handleEditConference = (conferenceId) => {
     setEditMode(true);
     setId(conferenceId);
-    axios
-      .get(`${BASE_URL}/conferences/${conferenceId}`)
-      .then((response) => {
-        setFormData(response.data);
-        setShowModal(true);
-      })
+    dispatch(fetchConferenceById({ conferenceId, setFormData, setShowModal }))
       .catch((error) => {
         console.error(`Error fetching conference data for editing:`, error);
       });
@@ -67,7 +62,7 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     if (editMode) {
       dispatch(updateConference({ id, formData }))
         .then(() => {
@@ -88,7 +83,6 @@ const HomePage = () => {
         });
     }
   };
-  
 
   const handleDeleteConference = (conferenceId) => {
     dispatch(deleteConference(conferenceId))
@@ -172,5 +166,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-

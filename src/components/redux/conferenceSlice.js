@@ -14,11 +14,20 @@ export const postConference = createAsyncThunk('conferences/post', async (formDa
   return response.data;
 });
 
-
 export const updateConference = createAsyncThunk('conferences/update', async ({ id, formData }) => {
   const response = await axios.put(`${BASE_URL}/conferences/update/${id}`, formData);
   return response.data;
 });
+
+
+export const fetchConferenceById = createAsyncThunk(
+  'conferences/fetchById',
+  async ({ conferenceId, setFormData, setShowModal }) => {
+      const response = await axios.get(`${BASE_URL}/conferences/${conferenceId}`);
+      return { data: response.data, setFormData, setShowModal };
+  }
+);
+
 
 export const deleteConference = createAsyncThunk('conferences/delete', async (conferenceId) => {
   await axios.delete(`${BASE_URL}/conferences/${conferenceId}`);
@@ -39,12 +48,19 @@ const conferenceSlice = createSlice({
         state.conferenceData = action.payload.content;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(postConference.fulfilled, (state) => {
+      .addCase(postConference.fulfilled, () => {
        
       })
-      .addCase(updateConference.fulfilled, (state) => {
+      .addCase(updateConference.fulfilled, () => {
         
       })
+
+      .addCase(fetchConferenceById.fulfilled, (state, action) => {
+        const { data, setFormData, setShowModal } = action.payload;
+        setFormData(data);
+        setShowModal(true);
+      })
+      
       .addCase(deleteConference.fulfilled, (state, action) => {
         state.conferenceData = state.conferenceData.filter(
           (conference) => conference.conferenceId !== action.payload
@@ -54,3 +70,5 @@ const conferenceSlice = createSlice({
 });
 
 export default conferenceSlice.reducer;
+
+

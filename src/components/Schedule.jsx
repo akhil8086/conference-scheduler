@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 
 import { useState, useEffect } from 'react';
@@ -79,13 +80,19 @@ const Schedule = () => {
       const conferenceStartTime = new Date(`${conference.startDate} ${startTime}`);
       const conferenceEndTime = new Date(`${conference.startDate} ${endTime}`);
   
-      const scheduleStartTime = new Date(`${conference.startDate} ${scheduleData.time}`);
-      const scheduleEndTime = new Date(scheduleStartTime);
-      scheduleEndTime.setHours(scheduleEndTime.getHours() + parseInt(scheduleData.duration));
+      const scheduleStartTime = scheduleData.time
+        ? new Date(`${conference.startDate} ${scheduleData.time}`)
+        : null;
+  
+      const scheduleEndTime = scheduleStartTime
+        ? new Date(scheduleStartTime)
+        : null;
   
       if (
-        scheduleStartTime < conferenceStartTime ||
-        scheduleEndTime > conferenceEndTime
+        scheduleStartTime &&
+        scheduleEndTime &&
+        (scheduleEndTime.getHours() + parseInt(scheduleData.duration) > conferenceEndTime.getHours() ||
+          scheduleStartTime.getHours() < conferenceStartTime.getHours())
       ) {
         alert('Schedule time must be within the conference start and end times.');
       } else {
